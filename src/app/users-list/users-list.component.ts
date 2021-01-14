@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserAndTask } from '../models/usersAndTasks';
 
 @Component({
   selector: 'app-users-list',
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users-list.component.css']
 })
 export class UsersListComponent implements OnInit {
-  userList = Array.from(Array(10).keys());
-
+  userAndTask: Array<UserAndTask> = [];
+  
   constructor() { }
 
   ngOnInit(): void {
+    this.userAndTask.push(new UserAndTask("123","Daniel"));
+    this.userAndTask.push(new UserAndTask("123","Pepe"))
   }
-
 }

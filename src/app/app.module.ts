@@ -7,11 +7,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatListModule } from '@angular/material/list';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatIconModule } from "@angular/material/icon";
+import { TaskListComponent } from './task-list/task-list.component'; 
+
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
+    TaskListComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,8 +23,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     BrowserAnimationsModule,
     MatListModule,
     ScrollingModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
