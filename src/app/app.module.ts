@@ -10,6 +10,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatIconModule } from "@angular/material/icon";
 import { TaskListComponent } from './task-list/task-list.component'; 
 import {MatButtonModule} from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -26,7 +27,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatListModule,
     ScrollingModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
