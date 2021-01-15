@@ -35,7 +35,6 @@ export class UsersListComponent implements OnInit {
   }
 
   addUser() {
-    let newUserName: string;
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       userName: ''
@@ -43,7 +42,7 @@ export class UsersListComponent implements OnInit {
     const dialogRef = this.matDialog.open(DialogBodyUserComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       data => {
-        newUserName = data.userName as string
+        let newUserName : string = data.userName as string
         this.usersAndTaskService
           .addUser(newUserName)
           .subscribe(
@@ -51,6 +50,36 @@ export class UsersListComponent implements OnInit {
             (error) => console.log(error)
           )
       }
-    );
+    , (error) => console.log(error));
+  }
+
+  updateUser(index: number) {
+    let user: UserAndTask = this.userAndTask[index]
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      userName: user.name
+    }
+    const dialogRef = this.matDialog.open(DialogBodyUserComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        let newUserName : string = data.userName as string
+        this.usersAndTaskService
+          .updateUser(user._id, newUserName)
+          .subscribe(
+            (json: any) => this.userAndTask[index].name = newUserName,
+            (error) => console.log(error)
+          )
+      }
+    , (error) => console.log(error));
+  }
+
+  deleteUser(index: number) {
+    let user: UserAndTask = this.userAndTask[index]
+    this.usersAndTaskService
+    .deleteUser(user._id)
+    .subscribe(
+      (json: any) => this.userAndTask.splice(index,1),
+      (error) => console.log(error)
+    )
   }
 }

@@ -2,14 +2,14 @@
   <h1> Users: </h1>
 </div>
 <div class="align-middle" style="overflow-y:auto;">
-  <mat-list class="border" *ngFor="let element of userAndTask">
+  <mat-list class="border" *ngFor="let element of userAndTask; let i = index">
     <div class="container">
       <div class="row container justify-content-center"                                                                                                                                                                                                                                                        >
         <div class="col-8 dropdown-item">
           <mat-list-item mat-button color="primary"> {{element.name}} </mat-list-item>
         </div>
         <div class="col-2">
-          <button>
+          <button (clic)="updateUser(i)">
             <mat-icon>update</mat-icon>
           </button>
         </div>

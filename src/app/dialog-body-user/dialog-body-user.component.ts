@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogBodyUserComponent implements OnInit {
 
   form: FormGroup;
-  userName: string;
+  userName: string = '';
 
   constructor(
     private fb: FormBuilder,

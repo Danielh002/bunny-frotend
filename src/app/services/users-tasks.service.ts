@@ -17,4 +17,12 @@ export class UsersTasksService {
   addUser(name: string){
     return this.webReqService.post('user', { name });
   }
+
+  updateUser(userId: string, name: string, ){
+    return this.webReqService.patch(`user/${userId}`, { name });
+  }
+
+  deleteUser(userId: string){
+    return this.webReqService.delete(`user/${userId}`);
+  }
 }
