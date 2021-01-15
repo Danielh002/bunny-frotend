@@ -1,18 +1,25 @@
-<h1>HOLA</h1>
-<div class="align-middle text-danger">
+<div>
+  <h1> Users: </h1>
+</div>
+<div class="align-middle" style="overflow-y:auto;">
   <mat-list class="border" *ngFor="let element of userAndTask">
     <div class="container">
-      <div class="row align-middle">
+      <div class="row container justify-content-center"                                                                                                                                                                                                                                                        >
         <div class="col-8 dropdown-item">
           <mat-list-item mat-button color="primary"> {{element.name}} </mat-list-item>
         </div>
         <div class="col-2">
-          <button><mat-icon>update</mat-icon></button> 
+          <button>
+            <mat-icon>update</mat-icon>
+          </button>
         </div>
         <div class="col-2">
-          <button><mat-icon>delete_outline</mat-icon></button> 
+          <button>
+            <mat-icon>delete_outline</mat-icon>
+          </button>
         </div>
       </div>
     </div>
   </mat-list>
+  <button type="button" class="col-12 btn btn-success">Add User</button>
 </div>

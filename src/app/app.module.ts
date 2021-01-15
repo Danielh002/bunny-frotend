@@ -9,6 +9,8 @@ import { UsersListComponent } from './users-list/users-list.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatIconModule } from "@angular/material/icon";
 import { TaskListComponent } from './task-list/task-list.component'; 
+import {MatButtonModule} from '@angular/material/button';
+
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { TaskListComponent } from './task-list/task-list.component';
     BrowserAnimationsModule,
     MatListModule,
     ScrollingModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
