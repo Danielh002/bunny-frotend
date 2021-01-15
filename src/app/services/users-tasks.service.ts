@@ -13,4 +13,8 @@ export class UsersTasksService {
   getUsersAndTask(){
     return this.webReqService.get('getUsersAndTasks'); 
   }
+
+  addUser(name: string){
+    return this.webReqService.post('user', { name });
+  }
 }

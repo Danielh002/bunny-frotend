@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { element } from 'protractor';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DialogBodyUserComponent } from '../dialog-body-user/dialog-body-user.component';
 import { UserAndTask } from '../models/usersAndTasks';
 import { UsersTasksService } from '../services/users-tasks.service';
 
@@ -11,11 +12,9 @@ import { UsersTasksService } from '../services/users-tasks.service';
 export class UsersListComponent implements OnInit {
   userAndTask: Array<UserAndTask> = [];
 
-  constructor(private usersAndTaskService: UsersTasksService) { }
+  constructor(private usersAndTaskService: UsersTasksService, private matDialog: MatDialog) { }
 
   ngOnInit(): void {
-    //this.userAndTask.push(new UserAndTask("123", "Daniel"));
-    //this.userAndTask.push(new UserAndTask("123", "Pepe"))
     this.getUsersAndTask();
     console.log(this.userAndTask)
 
@@ -35,7 +34,23 @@ export class UsersListComponent implements OnInit {
         (error) => console.log(error));
   }
 
-  addUser(){
-    
+  addUser() {
+    let newUserName: string;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      userName: ''
+    }
+    const dialogRef = this.matDialog.open(DialogBodyUserComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      data => {
+        newUserName = data.userName as string
+        this.usersAndTaskService
+          .addUser(newUserName)
+          .subscribe(
+            (json: any) => this.userAndTask.push(new UserAndTask(json.result._id, json.result.name)),
+            (error) => console.log(error)
+          )
+      }
+    );
   }
 }
