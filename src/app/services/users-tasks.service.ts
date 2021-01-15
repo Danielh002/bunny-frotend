@@ -19,7 +19,13 @@ export class UsersTasksService {
   }
 
   updateUser(userId: string, name: string, ){
-    return this.webReqService.patch(`user/${userId}`, { name });
+    let updateOp = [
+      {
+        "propName": "name",
+        "value": name
+      }
+    ]
+    return this.webReqService.patch(`user/${userId}`, updateOp );
   }
 
   deleteUser(userId: string){

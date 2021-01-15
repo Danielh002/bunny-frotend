@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogBodyUserComponent } from '../dialog-body-user/dialog-body-user.component';
 import { UserAndTask } from '../models/usersAndTasks';
+import { UserTask } from '../models/userTask';
 import { UsersTasksService } from '../services/users-tasks.service';
+import { ShareVariableService } from '../share-variable.service';
 
 @Component({
   selector: 'app-users-list',
@@ -12,7 +14,7 @@ import { UsersTasksService } from '../services/users-tasks.service';
 export class UsersListComponent implements OnInit {
   userAndTask: Array<UserAndTask> = [];
 
-  constructor(private usersAndTaskService: UsersTasksService, private matDialog: MatDialog) { }
+  constructor(private usersAndTaskService: UsersTasksService, private matDialog: MatDialog, private shareVariableService: ShareVariableService) { }
 
   ngOnInit(): void {
     this.getUsersAndTask();
@@ -32,6 +34,11 @@ export class UsersListComponent implements OnInit {
           this.userAndTask = tempArray
         },
         (error) => console.log(error));
+  }
+
+  sendingUserTasks(index: number){
+    let userTask: Array<UserTask> = this.userAndTask[index].tasks
+    this.shareVariableService.updateValue(userTask);
   }
 
   addUser() {
