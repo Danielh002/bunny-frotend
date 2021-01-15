@@ -49,13 +49,15 @@ export class UsersListComponent implements OnInit {
     const dialogRef = this.matDialog.open(DialogBodyUserComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       data => {
-        let newUserName : string = data.userName as string
-        this.usersAndTaskService
-          .addUser(newUserName)
-          .subscribe(
-            (json: any) => this.userAndTask.push(new UserAndTask(json.result._id, json.result.name)),
-            (error) => console.log(error)
-          )
+        if(data){
+          let newUserName : string = data.userName as string
+          this.usersAndTaskService
+            .addUser(newUserName)
+            .subscribe(
+              (json: any) => this.userAndTask.push(new UserAndTask(json.result._id, json.result.name)),
+              (error) => console.log(error)
+            ) 
+        }
       }
     , (error) => console.log(error));
   }
