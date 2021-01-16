@@ -17,8 +17,6 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsersAndTask();
-    console.log(this.userAndTask)
-
   }
 
   getUsersAndTask() {
@@ -30,7 +28,10 @@ export class UsersListComponent implements OnInit {
           json["result"].map(function (element) {
             tempArray.push(new UserAndTask().fromJSON(element))
           })
-          this.userAndTask = tempArray
+          this.userAndTask = tempArray;
+          if(this.userAndTask.length > 0){
+            this.sendingUserTasks(0);
+          } 
         },
         (error) => console.log(error));
   }

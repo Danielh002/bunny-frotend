@@ -28,7 +28,7 @@ export class TaskListComponent implements OnInit {
   addTask() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      selectedvalue: '',
+      state: 'TO-DO',
       description: ''
     }
     const dialogRef = this.matDialog.open(DialogBodyTaskComponent, dialogConfig);
