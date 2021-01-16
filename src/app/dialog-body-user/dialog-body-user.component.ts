@@ -17,13 +17,12 @@ export class DialogBodyUserComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogBodyUserComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
-    this.userName = data.userName;
+    this.form = this.fb.group({
+      userName: data.userName ?? '',
+    });
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      userName: '',
-    });
   }
 
   save() {
