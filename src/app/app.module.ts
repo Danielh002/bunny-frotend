@@ -14,10 +14,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { DialogBodyTaskComponent } from './dialog-body-task/dialog-body-task.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogBodyUserComponent } from './dialog-body-user/dialog-body-user.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
-
+import { MatSelectModule} from '@angular/material/select';
 
 
 
@@ -42,7 +42,9 @@ import { MatInputModule} from '@angular/material/input';
     MatDialogModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule 
+    MatInputModule,
+    MatSelectModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

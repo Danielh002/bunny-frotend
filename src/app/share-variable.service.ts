@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
-import { UserTask } from './models/userTask';
+import { UserAndTask } from './models/usersAndTasks';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import { UserTask } from './models/userTask';
 export class ShareVariableService {
 
   sharedVariable$ = new ReplaySubject(1);
-  updateValue(value: Array<UserTask>) {
+  updateValue(value: UserAndTask) {
       this.sharedVariable$.next(value);
   }
 }

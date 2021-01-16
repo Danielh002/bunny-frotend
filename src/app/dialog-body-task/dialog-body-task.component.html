@@ -1,1 +1,31 @@
-<p>dialog-body-task works!</p>
+<h2 mat-dialog-title> Task form: </h2>
+
+<div class="container">
+    <div class="row-12">
+        <mat-dialog-content [formGroup]="form">
+            <div class="col-12 align-middle">
+                <div  class="col-6">
+                    <mat-label>State: </mat-label>
+                </div>
+                <div class="col-6">
+                    <select name="stateSelect" formControlName="selectedvalue">
+                        <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                    </select>
+                </div> 
+                
+            </div>
+            <br>
+            <mat-form-field>
+                <input matInput placeholder="Task description" formControlName="description">
+            </mat-form-field>
+
+
+        </mat-dialog-content>
+    </div>
+
+    <mat-dialog-actions>
+        <button class="mat-raised-button" (click)="close()">Close</button>
+        <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
+    </mat-dialog-actions>
+
+</div>
