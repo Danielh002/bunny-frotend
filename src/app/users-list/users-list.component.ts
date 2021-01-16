@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogBodyUserComponent } from '../dialog-body-user/dialog-body-user.component';
+import { SharedVar } from '../models/sharedVar';
 import { UserAndTask } from '../models/usersAndTasks';
 import { UsersTasksService } from '../services/users-tasks.service';
 import { ShareVariableService } from '../share-variable.service';
@@ -17,6 +18,8 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsersAndTask();
+    this.shareVariableService.sharedVariableTaskToUser$.subscribe(
+      (element: Array<UserAndTask>)  => this.userAndTask= element )
   }
 
   getUsersAndTask() {
@@ -37,7 +40,8 @@ export class UsersListComponent implements OnInit {
   }
 
   sendingUserTasks(index: number){
-    this.shareVariableService.updateValue(this.userAndTask[index]);
+    let newSharedVar : SharedVar = new SharedVar(index, this.userAndTask)
+    this.shareVariableService.updateUserToTask(newSharedVar);
   }
 
   addUser() {
@@ -88,7 +92,10 @@ export class UsersListComponent implements OnInit {
     this.usersAndTaskService
     .deleteUser(user._id)
     .subscribe(
-      (json: any) => this.userAndTask.splice(index,1),
+      (json: any) => {
+        this.userAndTask.splice(index,1);
+        this.sendingUserTasks(-1);
+      },
       (error) => console.log(error)
     )
   }

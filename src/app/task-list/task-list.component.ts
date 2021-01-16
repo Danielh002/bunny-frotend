@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogBodyTaskComponent } from '../dialog-body-task/dialog-body-task.component';
+import { SharedVar } from '../models/sharedVar';
 import { UserAndTask } from '../models/usersAndTasks';
 import { UserTask } from '../models/userTask';
 import { UsersTasksService } from '../services/users-tasks.service';
@@ -12,17 +13,20 @@ import { ShareVariableService } from '../share-variable.service';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
-  userAndTaks: UserAndTask;
-  tasks: Array<UserTask> = [];
-
+  userAndTask: Array<UserAndTask> = [];
+  currentIndex: number = -1;
   constructor(private usersAndTaskService: UsersTasksService, private matDialog: MatDialog, private shareVariableService: ShareVariableService) { 
   }
 
   ngOnInit(): void {
-    this.shareVariableService.sharedVariable$.subscribe((userAndTasks: UserAndTask) => {
-      this.userAndTaks = userAndTasks;
-      this.tasks = userAndTasks.tasks ?? []
+    this.shareVariableService.sharedVariableUserToTask$.subscribe((sharedVar: SharedVar) => {
+      this.userAndTask = sharedVar.currentList;
+      this.currentIndex = sharedVar.userIndex;
     })
+  }
+
+  sendingTaskToUser(){
+    this.shareVariableService.updateTaskToUsers(this.userAndTask);
   }
 
   addTask() {
@@ -38,11 +42,13 @@ export class TaskListComponent implements OnInit {
           let description : string = data.description as string;
           let selectedState: string = data.selectedvalue as string;
           this.usersAndTaskService
-          .addTask(description, selectedState, this.userAndTaks._id)
+          .addTask(description, selectedState, this.userAndTask[this.currentIndex]._id)
           .subscribe(
             (json: any) => {
               let tempTask = json.result
-              this.tasks.push(new UserTask(tempTask.result_id, tempTask.description, tempTask.state, tempTask.userId));
+              this.userAndTask[this.currentIndex].tasks = this.userAndTask[this.currentIndex].tasks ?? []
+              this.userAndTask[this.currentIndex].tasks.push(new UserTask(tempTask.result_id, tempTask.description, tempTask.state, tempTask.userId));
+              this.sendingTaskToUser()
             },
             (error) => console.log(error)
           ) 
@@ -53,7 +59,7 @@ export class TaskListComponent implements OnInit {
 
   
   updateTask(index: number) {
-    let task: UserTask = this.tasks[index]
+    let task: UserTask =  this.userAndTask[this.currentIndex].tasks[index]
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       state: task.state,
@@ -69,8 +75,9 @@ export class TaskListComponent implements OnInit {
           .updateTask(task._id, description, selectedState)
           .subscribe(
             (_) => {
-              this.tasks[index].state = selectedState;
-              this.tasks[index].description = description;
+              this.userAndTask[this.currentIndex].tasks[index].state = selectedState;
+              this.userAndTask[this.currentIndex].tasks[index].description = description;
+              this.sendingTaskToUser()
             },
             (error) => console.log(error)
           ) 
@@ -80,11 +87,14 @@ export class TaskListComponent implements OnInit {
   }
 
   deleteTask(index: number) {
-    let user: UserTask = this.tasks[index]
+    let user: UserTask =  this.userAndTask[this.currentIndex].tasks[index]
     this.usersAndTaskService
     .deleteTask(user._id)
     .subscribe(
-      (json: any) => this.tasks.splice(index,1),
+      (json: any) => {
+        this.userAndTask[this.currentIndex].tasks.splice(index,1),
+        this.sendingTaskToUser();
+      },
       (error) => console.log(error)
     )
   }
